@@ -1,0 +1,128 @@
+* 
+{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box; 
+}
+
+body 
+{
+	font: 13px Helvetica, Arial; 
+}
+
+ul 
+{
+	list-style: none;
+	word-wrap: break-word;
+}
+
+/* Pages */
+
+.pages 
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+.page 
+{
+	height: 100%;
+	position: absolute;
+	width: 100%;
+}
+
+/* Login */
+
+.login.page 
+{
+	background-color: #000;
+}
+
+.login.page .form 
+{
+	height: 100px;
+	margin-top: -100px;
+	position: absolute;
+	text-align: center;
+	top: 50%;
+	width: 100%;
+}
+
+.login.page .form .usernameInput 
+{
+	background-color: transparent;
+	border: none;
+	border-bottom: 2px solid #fff;
+	outline: none;
+	padding-bottom: 15px;
+	text-align: center;
+	width: 400px;
+}
+
+.login.page .title 
+{
+	font-size: 200%;
+}
+
+.login.page .usernameInput 
+{
+	font-size: 200%;
+	letter-spacing: 3px;
+}
+
+.login.page .title, .login.page .usernameInput 
+{
+	color: #fff;
+	font-weight: 100;
+}
+
+/* Chatroom */
+	
+#chat_room 
+{
+	display: none; 
+}
+
+form 
+{
+	background: #000;
+	padding: 3px;
+	position: fixed;
+	bottom: 0;
+	width: 100%; 
+}
+
+form input 
+{
+	border: 0;
+	padding: 10px;
+	width: 90%;
+	margin-right: .5%;
+}
+
+form button 
+{
+	width: 9%;
+	background: rgb(130, 224, 255);
+	border: none;
+	padding: 10px; 
+}
+
+#messages 
+{ 
+	list-style-type: none;
+	margin: 0;
+	padding: 0; 
+}
+
+#messages li 
+{
+	padding: 5px 10px; 
+}
+
+#messages li:nth-child(odd) 
+{
+	background: #eee; 
+}

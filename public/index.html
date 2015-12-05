@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Socket.IO chat</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" >
+</head>
+<body>
+	<!-- Login Page -->
+	<ul class="pages">
+		<li class="login page">
+		  <div class="form">
+			<h3 class="title">What's your nickname?</h3>
+			<input class="usernameInput" type="text" maxlength="14" />
+		  </div>
+		</li>
+	</ul>
+	<!-- Chatroom -->
+	<div id="chat_room">
+		<ul id="messages"></ul>
+		<form>
+			<input id="message" autocomplete="off" />
+			<button>Send</button>
+		</form>
+	</div>
+	<script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+	<script type="text/javascript">
+		var username = $('.usernameInput');
+		var user_obj = {};
+		var socket = io();
+		
+		username.focus();
+		
+		$(window).keydown(function (event) {
+			// When the client hits ENTER on their keyboard
+			if( event.which === 13 && username.val().trim().length > 0 && $.isEmptyObject(user_obj) ){
+				
+				user_obj['username'] = username.val().trim();
+				socket.emit('add user', username.val() );
+				$('.pages').fadeOut();
+				$('#chat_room').show();
+				
+			}
+		});
+		
+		$('form').submit(function(){
+			socket.emit( 'chat message', { 'message': $('#message').val(), 'username': user_obj.username } );
+			$('#message').val('');
+			return false;
+		});
+		
+		socket.on('login', function(data){
+			$('#messages').append( $('<li>').text('Welcome, there are ' + data.num_users + ' people in the room.') );
+		});
+		
+		socket.on('user joined', function(data){
+			$('#messages').append( $('<li>').text(data.username + ' has joined the room.') );
+		});
+		
+		socket.on('chat message', function(data){
+			$('#messages').append( $('<li>').html('<strong>'+ data.username +': </strong>'+ data.message) );
+		});
+		
+		socket.on('user left', function(data){
+			$('#messages').append( $('<li>').text(data.username + ' has left the room.') );
+		});
+	</script>
+</body>
+</html>
