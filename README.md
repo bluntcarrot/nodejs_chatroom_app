@@ -1,7 +1,5 @@
-# chat-example
+# chatroom app using node.js and socket.io
 
-This is the source code for a very simple chat example used for 
-the [Getting Started](http://socket.io/get-started/chat/) guide 
-of the Socket.IO website.
+A chatroom web application built using Node.js and Socket.io. I took an example chatroom application to reference and build upon with a new UI and features.
 
-Please refer to it to learn how to run this application.
+
