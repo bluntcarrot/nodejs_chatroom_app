@@ -18,6 +18,12 @@
 	<!-- Chatroom -->
 	<div id="chat_room">
 		<ul id="messages"></ul>
+		<div id="users_list">
+			<ul>
+				<li><strong>Users</strong></li>
+				<br>
+			</ul>
+		</div>
 		<form>
 			<input id="message" autocomplete="off" />
 			<button>Send</button>
@@ -33,7 +39,7 @@
 		username.focus();
 		
 		$(window).keydown(function (event) {
-			// When the client hits ENTER on their keyboard
+			// When the client hits ENTER
 			if( event.which === 13 && username.val().trim().length > 0 && $.isEmptyObject(user_obj) ){
 				
 				user_obj['username'] = username.val().trim();
@@ -52,10 +58,17 @@
 		
 		socket.on('login', function(data){
 			$('#messages').append( $('<li>').text('Welcome, there are ' + data.num_users + ' people in the room.') );
+			
+			for( var key in data.users ){
+				var temp_key = key === user_obj.username ? '<strong>'+ user_obj.username +'</strong>' : key;
+				$('#users_list ul').append( $('<li class="'+ key +'">'+temp_key+'</li>') );
+			}
+			
 		});
 		
 		socket.on('user joined', function(data){
 			$('#messages').append( $('<li>').text(data.username + ' has joined the room.') );
+			$('#users_list ul').append( $('<li class="'+ data.username +'">').text(data.username) );
 		});
 		
 		socket.on('chat message', function(data){
@@ -64,6 +77,7 @@
 		
 		socket.on('user left', function(data){
 			$('#messages').append( $('<li>').text(data.username + ' has left the room.') );
+			$('.'+data.username).remove();
 		});
 	</script>
 </body>

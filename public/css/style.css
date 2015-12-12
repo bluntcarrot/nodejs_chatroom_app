@@ -98,13 +98,13 @@ form input
 {
 	border: 0;
 	padding: 10px;
-	width: 90%;
+	width: 88vw;
 	margin-right: .5%;
 }
 
 form button 
 {
-	width: 9%;
+	width: 10vw;
 	background: rgb(130, 224, 255);
 	border: none;
 	padding: 10px; 
@@ -114,7 +114,9 @@ form button
 { 
 	list-style-type: none;
 	margin: 0;
-	padding: 0; 
+	padding: 0;
+	float: left;
+    width: 85vw;
 }
 
 #messages li 
@@ -125,4 +127,10 @@ form button
 #messages li:nth-child(odd) 
 {
 	background: #eee; 
+}
+
+#users_list
+{
+	width: 15vw;
+	float: right;
 }
