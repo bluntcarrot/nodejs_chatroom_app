@@ -16,6 +16,12 @@ ul
 	word-wrap: break-word;
 }
 
+h4
+{
+	padding: 15px;
+	padding-top: 2em;
+}
+
 /* Pages */
 
 .pages 
@@ -108,6 +114,13 @@ form button
 	background: rgb(130, 224, 255);
 	border: none;
 	padding: 10px; 
+}
+
+.enter_msg
+{
+	display: none;
+	padding-top: 15em;
+	color: #fff;
 }
 
 #messages 

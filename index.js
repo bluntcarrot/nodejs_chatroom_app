@@ -4,21 +4,23 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var num_users = 0,
-	users_obj = {};
+	users_obj = {},
+	users_color = {};
 
 app.use(express.static(__dirname + '/public'));
 
 io.on('connection', function(socket){
 	
 	// when the client emits 'add user', this listens and executes
-	socket.on('add user', function (username) {
+	socket.on('add user', function (user_info) {
 		
 		// store global variables
 		++num_users;
-		users_obj[username] = username;
+		users_obj[user_info.username] = user_info.username;
+		users_color[user_info.username] = user_info.color;
 		
 		// store the username in the socket session for this client
-		socket.username = username;
+		socket.username = user_info.username;
 		
 		socket.emit('login', {
 			users: users_obj,
@@ -34,6 +36,7 @@ io.on('connection', function(socket){
 	});
 	
 	socket.on('chat message', function(data){
+		data = { 'data': data, 'users_color': users_color };
 		io.emit('chat message', data);
 	});
 	
