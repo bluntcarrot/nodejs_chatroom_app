@@ -40,6 +40,12 @@ io.on('connection', function(socket){
 		io.emit('chat message', data);
 	});
 	
+	socket.on('server_pm', function(data){
+		//io.to(data.id).emit('client_pm', data.msg);
+		//currently emits to all connected clients
+		socket.broadcast.to(data.id).emit('client_pm', data.msg);
+	});
+	
 	// when the user disconnects...
 	socket.on('disconnect', function () {
 

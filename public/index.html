@@ -74,13 +74,27 @@
 			
 		});
 		
+		var attach_event = function(classname){
+			$('.'+classname).off('click');
+			$('.'+classname).on('click', function(){
+			
+				var msg = prompt("Enter message");
+				socket.emit( 'server_pm', { 'id': $(this).data('sid'), 'msg': msg } );
+				
+			});
+		}
+		
 		socket.on('login', function(data){
 		
 			$('#messages').append( $('<li>').text('Welcome, there are ' + data.num_users + ' people in the room.') );
 			
 			for( var key in data.users ){
 				var temp_key = key === user_obj.username ? '<strong>'+ user_obj.username +'</strong>' : key;
-				$('#users_list ul').append( $('<li class="'+ key +'">'+temp_key+'</li>') );
+				//needs work with the socket id joining correct room, currently sends same socket.io id
+				$('#users_list ul').append( $('<li data-sid="'+ socket.io.engine.id +'" class="'+ key +'">'+temp_key+'</li>') );
+				if( key !== user_obj.username ){
+					attach_event(key);
+				}
 			}
 			
 		});
@@ -89,6 +103,7 @@
 		
 			$('#messages').append( $('<li>').text(data.username + ' has joined the room.') );
 			$('#users_list ul').append( $('<li class="'+ data.username +'">').text(data.username) );
+			attach_event(data.username);
 			
 		});
 		
@@ -104,6 +119,10 @@
 			
 			$('#messages').append( $('<li style="color:#'+color+';">').html('<strong>'+ data.data.username +': </strong>'+ data.data.message) );
 			
+		});
+		
+		socket.on('client_pm', function(msg){
+			alert(msg);
 		});
 		
 		socket.on('user left', function(data){
